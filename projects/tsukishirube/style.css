@@ -1,0 +1,175 @@
+:root {
+    --bg-color: #020408;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --text-primary: #e6f0ff;
+    --text-secondary: rgba(230, 240, 255, 0.6);
+    --accent: #8fbdfc;
+    --spacing: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #020408;
+    color: var(--text-primary);
+    font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* カクつきを解消するため、疑似要素を GPU 加速 (transform) で動かす */
+body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(at 20% 30%, #1a2a5a 0%, transparent 60%),
+        radial-gradient(at 80% 70%, #2a1040 0%, transparent 60%),
+        radial-gradient(at 50% 50%, #0a1835 0%, transparent 80%);
+    background-size: 100% 100%;
+    animation: smoothFlow 10s ease-in-out infinite alternate;
+    z-index: -1;
+    filter: blur(40px); /* 境目をより柔らかく */
+}
+
+@keyframes smoothFlow {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    100% { transform: translate(-5%, -10%) rotate(5deg) scale(1.1); }
+}
+
+.night-sky {
+    background: transparent; /* 背景を透過させる */
+    min-height: 100vh;
+    padding: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: calc(var(--spacing) * 2);
+}
+
+.logo {
+    font-weight: 300;
+    font-size: 2.5rem;
+    letter-spacing: 0.2rem;
+}
+
+.logo span {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.5rem;
+    margin-top: 8px;
+    opacity: 0.5;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    display: grid;
+    gap: 30px;
+}
+
+.object-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.card-header {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;
+    color: var(--accent);
+    text-transform: uppercase;
+}
+
+.title {
+    font-weight: 300;
+    font-size: 1.4rem;
+    margin-top: 5px;
+}
+
+.pubkey {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/* Heartbeat Animation with Motion concept */
+.wave-container {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.wave {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--accent) 50%, 
+        transparent 100%);
+    position: relative;
+    opacity: 0.3;
+    /* ドクン、と動いてからゆっくり戻るイージング */
+    animation: pulse 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scaleX(0.7); opacity: 0.1; }
+    15% { transform: scaleX(1.3); opacity: 0.7; } /* 鼓動の瞬間 */
+    100% { transform: scaleX(0.9); opacity: 0.2; }
+}
+
+.body-info {
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.insight-item h3 {
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.insight-item time {
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.footer {
+    margin-top: auto;
+    padding-top: var(--spacing);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}

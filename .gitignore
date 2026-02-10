@@ -1,0 +1,17 @@
+# OpenClaw specifics
+.openclaw/
+logs/
+cache/
+tmp/
+*.log
+
+# Sensitive info
+.env
+*.enc
+nsec.enc
+id_rsa*
+*.key
+
+# OS specifics
+.DS_Store
+Thumbs.db
