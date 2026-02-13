@@ -4,102 +4,164 @@
     --accent-cyan: #38bdf8;
     --on-surface: #f8fafc;
     --on-surface-variant: #94a3b8;
-    --glass-bg: rgba(15, 23, 42, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.05);
+    --outline-variant: rgba(255, 255, 255, 0.1);
+    --surface-container-low: rgba(15, 23, 42, 0.4);
     
-    /* M3 State Layers: Overlay Opacities */
-    --state-hover-opacity: 0.08;
-    --state-focus-opacity: 0.12;
-    --state-pressed-opacity: 0.12;
+    /* M3 Expressive Motion Tokens */
+    --duration-short: 200ms;
+    --duration-medium: 400ms;
+    --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --easing-emphasized: cubic-bezier(0.3, 0, 0, 1);
 
-    /* Web Safe / High Legibility Google Fonts */
-    --font-serif: 'Playfair Display', serif; /* よりエレガントで伝統的なセリフ */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif; /* M3に準拠した高可読性サンセリフ */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
+    background: var(--bg-deep);
+    color: var(--on-surface);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
     letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
 }
 
-/* M3 Typography Scale Logic */
+.night-sky {
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    padding: 4rem 2rem;
+    position: relative;
+}
+
+.night-sky::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140vw;
+    height: 140vh;
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: breathe 15s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2.5rem;
+}
+
+/* Typography Hierarchy */
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
 .logo {
     font-family: var(--font-serif);
-    font-size: 3.5rem; /* Display Large */
+    font-size: 3.5rem;
     font-weight: 900;
-    font-style: italic; /* 意志の強さと動き */
+    font-style: italic;
     letter-spacing: -0.02em;
     color: var(--on-surface);
+    margin-bottom: 0.5rem;
+}
+
+.logo span {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.5rem;
+    color: var(--accent-cyan);
+    text-indent: 0.5rem;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: var(--on-surface-variant);
+    letter-spacing: 0.1rem;
+}
+
+/* M3 Expressive Card Logic */
+.object-card {
+    background: var(--surface-container-low);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--outline-variant);
+    border-radius: 24px;
+    padding: 0;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: transform var(--duration-medium) var(--easing-emphasized),
+                border-color var(--duration-short) linear;
+}
+
+.object-card:hover {
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+.card-header {
+    padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+}
+
+.label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3rem;
+    color: var(--accent-cyan);
+    opacity: 0.8;
 }
 
 .title {
     font-family: var(--font-serif);
-    font-size: 2.25rem; /* Headline Large */
+    font-size: 2.25rem;
     font-weight: 700;
-    color: var(--on-surface);
+    margin-top: 0.5rem;
 }
 
-.insight-item h3 {
-    font-family: var(--font-serif);
-    font-size: 1.5rem; /* Title Large */
-    font-weight: 700;
-    line-height: 1.4;
+.card-body {
+    padding: 0 2.5rem 2.5rem 2.5rem;
 }
 
-.insight-item p {
-    font-family: var(--font-sans);
-    font-size: 1rem; /* Body Large */
-    line-height: 1.6;
-    color: var(--on-surface-variant);
-}
-
-/* Material Design States & "Clickability" */
-.object-card {
+/* Individual Insight Item as an Interactive Surface */
+.insight-item {
     position: relative;
-    background: var(--glass-bg);
-    overflow: hidden; /* For state layer overlay */
-    border-radius: 8px; /* M3 Medium shape */
+    padding: 2rem 2.5rem;
+    transition: background-color var(--duration-short) linear;
+    cursor: pointer;
 }
 
-/* State Layer Implementation */
-.insight-item h3 a::after {
+.insight-item::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--accent-cyan);
+    background: var(--on-surface);
     opacity: 0;
-    transition: opacity 0.2s linear;
+    transition: opacity var(--duration-short) linear;
     pointer-events: none;
-    z-index: 0;
 }
 
-.insight-item h3 a {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    padding: 0.2em 0;
-    border-bottom: 2px solid transparent;
+.insight-item:hover::before {
+    opacity: 0.08;
 }
 
-.insight-item h3 a:hover {
-    color: var(--accent-cyan);
-    border-bottom-color: var(--accent-cyan);
-}
-
-/* Hover state on the whole card area for better affordance */
-.object-card:has(a:hover) {
-    background: rgba(56, 189, 248, 0.05); /* Soft hover glow */
-    border-color: rgba(56, 189, 248, 0.3);
-}
-
-.object-card:active {
-    transform: scale(0.995); /* Pressed state feedback */
-}
-
-.references ul li {
-    font-size: 0.85rem;
-    border-bottom: 1px solid var(--glass-border);
-    padding: 0.5rem 0;
+.insight-item:active::before {
+    opacity: 0.12;
 }
 
 .insight-item time {
@@ -110,60 +172,70 @@ body {
 }
 
 .insight-item h3 a {
-    color: var(--text-main);
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--on-surface);
     text-decoration: none;
-    transition: color 0.3s;
+    display: block;
+    z-index: 1;
 }
 
-.insight-item h3 a:hover {
+.insight-item h3 a::after {
+    content: ' →';
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all var(--duration-short) var(--easing-standard);
+    display: inline-block;
     color: var(--accent-cyan);
 }
 
-.back-link {
-    margin-top: 3rem;
-}
-
-.back-link a {
-    color: var(--accent-cyan);
-    text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.back-link a:hover {
+.insight-item:hover h3 a::after {
     opacity: 1;
+    transform: translateX(10px);
 }
 
 .insight-item p {
-    font-size: 0.95rem;
-    color: var(--text-dim);
-    line-height: 1.8;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+    margin-top: 1rem;
 }
 
 .divider {
     border: none;
-    border-bottom: 1px solid var(--glass-border);
-    opacity: 0.3;
+    border-bottom: 1px solid var(--outline-variant);
 }
 
-/* References Section */
+/* Back Link & References: M3 Chip/Button vibe */
+.back-link {
+    margin-top: 3rem;
+}
+
+.back-link a, .references a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.08);
+    transition: all var(--duration-short) var(--easing-standard);
+    display: inline-block;
+}
+
+.back-link a:hover, .references a:hover {
+    background: rgba(56, 189, 248, 0.2);
+    transform: translateY(-1px);
+}
+
 .references ul {
     list-style: none;
 }
 
 .references li {
-    margin-bottom: 0.8rem;
-}
-
-.references a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
-}
-
-.references a:hover {
-    color: var(--accent-cyan);
+    margin-bottom: 1rem;
 }
 
 /* Footer */
@@ -172,7 +244,7 @@ body {
     margin-top: 6rem;
     padding-bottom: 4rem;
     font-size: 0.75rem;
-    color: var(--text-dim);
+    color: var(--on-surface-variant);
     opacity: 0.6;
 }
 
