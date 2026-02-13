@@ -1,18 +1,33 @@
 :root {
-    --bg-deep: #020617;
-    --bg-gradient: radial-gradient(circle at 20% 30%, #0f172a 0%, #020617 100%);
-    --accent-cyan: #38bdf8;
-    --on-surface: #f8fafc;
+    --bg-deep: #030a1e; /* より深く、わずかに青みの強い紺色へ */
+    --bg-gradient: radial-gradient(circle at 50% 10%, #0a192f 0%, #030a1e 100%);
+    --accent-cyan: #7dd3fc; /* 少し彩度を落とし、透明感を強調 */
+    --on-surface: #f1f5f9;
     --on-surface-variant: #94a3b8;
     --outline-variant: rgba(255, 255, 255, 0.08);
-    --surface-container-low: rgba(15, 23, 42, 0.6);
-    --surface-container-highest: rgba(30, 41, 59, 0.4);
+    --surface-container-low: rgba(10, 25, 47, 0.4);
+    --surface-container-highest: rgba(30, 41, 59, 0.3);
     
+    --duration-slow: 800ms;
     --duration-medium: 400ms;
-    --easing-emphasized: cubic-bezier(0.3, 0, 0, 1);
+    --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* 呼吸するモーション (Biological Rhythm) の再定義 */
+@keyframes breathing {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.02); opacity: 1; }
+}
+
+.heartbeat-section .wave {
+    animation: breathing 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    background: var(--accent-cyan);
+    height: 2px;
+    width: 100%;
+    box-shadow: 0 0 20px var(--accent-cyan);
 }
 
 * {
