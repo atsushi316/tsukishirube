@@ -1,136 +1,39 @@
 :root {
-    --bg-deep: #020b1a;
-    --bg-gradient: radial-gradient(circle at 50% 50%, #0a192f 0%, #020b1a 100%);
-    --accent-cyan: #00f2ff;
-    --text-main: #e0e6ed;
+    --bg-deep: #020617; /* より深い闇へ */
+    --bg-gradient: radial-gradient(circle at 20% 30%, #0f172a 0%, #020617 100%);
+    --accent-cyan: #22d3ee; /* 彩度を微調整し、誘目性を高める */
+    --text-main: #f8fafc;
     --text-dim: #94a3b8;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(15, 23, 42, 0.4); /* 深みのある透過 */
+    --glass-border: rgba(255, 255, 255, 0.08);
     --font-serif: 'Shippori Mincho', serif;
     --font-sans: 'Montserrat', 'Noto Sans JP', sans-serif;
+    --frosted-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); /* 拡散シャドウによる奥行き */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: var(--bg-deep);
-    color: var(--text-main);
-    font-family: var(--font-sans);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-.night-sky {
-    min-height: 100vh;
-    background: var(--bg-gradient);
-    padding: 4rem 2rem;
-    position: relative;
-}
-
-/* Background Animation: Breathing Aura */
-.night-sky::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 140vw;
-    height: 140vh;
-    background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: breathe 15s ease-in-out infinite;
-    z-index: 0;
-}
-
-@keyframes breathe {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 2.5rem; /* 8px grid logic (40px) */
-}
-
-/* Typography Hierarchy */
-.header {
-    text-align: center;
-    margin-bottom: 4rem;
-}
-
-.logo {
-    font-family: var(--font-serif);
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: 0.2rem;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-}
-
-.logo span {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 300;
-    letter-spacing: 0.5rem;
-    color: var(--accent-cyan);
-    text-indent: 0.5rem;
-}
-
-.tagline {
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1rem;
-}
-
-/* Object-Oriented Card Design */
+/* 2026 Trend: Frosted Touch Logic */
 .object-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: 4px; /* White-silver ratio vibe: static and stable */
+    border-radius: 2px; /* 鋭角に近い微小な丸み：厳格さと洗練 */
     padding: 2.5rem;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--frosted-glow);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .object-card:hover {
-    border-color: rgba(0, 242, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 12px 48px 0 rgba(0, 242, 255, 0.1);
+    transform: scale(1.005);
 }
 
-.card-header {
-    margin-bottom: 1.5rem;
-}
-
-.label {
-    font-size: 0.7rem;
-    letter-spacing: 0.3rem;
-    color: var(--accent-cyan);
-    opacity: 0.8;
-}
-
-.title {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    margin-top: 0.5rem;
-}
-
-/* Insights Items: Hierarchy & White Space */
-.insight-item {
-    padding: 1.5rem 0;
-}
-
+/* Dynamic Shadow Depth */
 .insight-item.highlight {
-    border-left: 2px solid var(--accent-cyan);
+    border-left: 1px solid var(--accent-cyan); /* 線を細くし、繊細さを強調 */
     padding-left: 1.5rem;
+    background: linear-gradient(90deg, rgba(34, 211, 238, 0.03) 0%, transparent 100%);
 }
 
 .insight-item time {
