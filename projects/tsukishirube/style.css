@@ -4,8 +4,9 @@
     --accent-cyan: #38bdf8;
     --on-surface: #f8fafc;
     --on-surface-variant: #94a3b8;
-    --outline-variant: rgba(255, 255, 255, 0.1);
-    --surface-container-low: rgba(15, 23, 42, 0.4);
+    --outline-variant: rgba(255, 255, 255, 0.08);
+    --surface-container-low: rgba(15, 23, 42, 0.6);
+    --surface-container-highest: rgba(30, 41, 59, 0.4);
     
     /* M3 Expressive Motion Tokens */
     --duration-short: 200ms;
@@ -15,6 +16,9 @@
 
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Logic: Silver Ratio (1:1.414) for stability and discipline */
+    --radius-m: 12px;
 }
 
 * {
@@ -64,7 +68,7 @@ body {
     position: relative;
     z-index: 1;
     display: grid;
-    gap: 2.5rem;
+    gap: 3rem;
 }
 
 /* Typography Hierarchy */
@@ -96,28 +100,22 @@ body {
 .tagline {
     font-size: 0.9rem;
     color: var(--on-surface-variant);
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.2rem;
 }
 
-/* M3 Expressive Card Logic */
+/* Card-in-Card Implementation */
 .object-card {
     background: var(--surface-container-low);
     backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--outline-variant);
     border-radius: 24px;
-    padding: 0;
+    padding: 2.5rem;
     margin-bottom: 2rem;
-    overflow: hidden;
-    transition: transform var(--duration-medium) var(--easing-emphasized),
-                border-color var(--duration-short) linear;
-}
-
-.object-card:hover {
-    border-color: rgba(56, 189, 248, 0.3);
+    position: relative;
 }
 
 .card-header {
-    padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .label {
@@ -134,34 +132,29 @@ body {
     margin-top: 0.5rem;
 }
 
-.card-body {
-    padding: 0 2.5rem 2.5rem 2.5rem;
-}
-
-/* Individual Insight Item as an Interactive Surface */
+/* Individual Insight Card (The "In" Card) */
 .insight-item {
-    position: relative;
-    padding: 2rem 2.5rem;
-    transition: background-color var(--duration-short) linear;
+    background: var(--surface-container-highest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-m);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all var(--duration-medium) var(--easing-emphasized);
     cursor: pointer;
+    position: relative;
+    display: block;
+    text-decoration: none;
 }
 
-.insight-item::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--on-surface);
-    opacity: 0;
-    transition: opacity var(--duration-short) linear;
-    pointer-events: none;
+.insight-item:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    background: rgba(30, 41, 59, 0.7);
 }
 
-.insight-item:hover::before {
-    opacity: 0.08;
-}
-
-.insight-item:active::before {
-    opacity: 0.12;
+.insight-item:active {
+    transform: translateY(-2px) scale(0.99);
 }
 
 .insight-item time {
@@ -171,18 +164,16 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.insight-item h3 a {
+.insight-item h3 {
     font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.4;
     color: var(--on-surface);
-    text-decoration: none;
-    display: block;
-    z-index: 1;
+    margin-bottom: 1rem;
 }
 
-.insight-item h3 a::after {
+.insight-item h3::after {
     content: ' →';
     opacity: 0;
     transform: translateX(-10px);
@@ -191,7 +182,7 @@ body {
     color: var(--accent-cyan);
 }
 
-.insight-item:hover h3 a::after {
+.insight-item:hover h3::after {
     opacity: 1;
     transform: translateX(10px);
 }
@@ -201,15 +192,9 @@ body {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--on-surface-variant);
-    margin-top: 1rem;
 }
 
-.divider {
-    border: none;
-    border-bottom: 1px solid var(--outline-variant);
-}
-
-/* Back Link & References: M3 Chip/Button vibe */
+/* Back Link & References: M3 Chip/Button style */
 .back-link {
     margin-top: 3rem;
 }
@@ -217,17 +202,19 @@ body {
 .back-link a, .references a {
     color: var(--accent-cyan);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     padding: 0.6rem 1.2rem;
-    border-radius: 20px;
-    background: rgba(56, 189, 248, 0.08);
+    border-radius: 100px;
+    background: rgba(56, 189, 248, 0.1);
     transition: all var(--duration-short) var(--easing-standard);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .back-link a:hover, .references a:hover {
     background: rgba(56, 189, 248, 0.2);
-    transform: translateY(-1px);
+    transform: translateX(5px);
 }
 
 .references ul {
