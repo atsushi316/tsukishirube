@@ -8,18 +8,11 @@
     --surface-container-low: rgba(15, 23, 42, 0.6);
     --surface-container-highest: rgba(30, 41, 59, 0.4);
     
-    /* M3 Expressive Motion Tokens */
-    --duration-short: 200ms;
     --duration-medium: 400ms;
-    --easing-standard: cubic-bezier(0.2, 0, 0, 1);
     --easing-emphasized: cubic-bezier(0.3, 0, 0, 1);
 
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-
-    /* Logic: Silver Ratio (1:1.414) for stability and discipline */
-    --radius-m: 12px;
-    --radius-l: 16px;
 }
 
 * {
@@ -34,226 +27,118 @@ body {
     font-family: var(--font-sans);
     line-height: 1.6;
     overflow-x: hidden;
-    letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
 }
 
 .night-sky {
     min-height: 100vh;
     background: var(--bg-gradient);
-    padding: 4rem 2rem;
-    position: relative;
-}
-
-.night-sky::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 140vw;
-    height: 140vh;
-    background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    animation: breathe 15s ease-in-out infinite;
-    z-index: 0;
-}
-
-@keyframes breathe {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
+    padding: 2rem 1rem; /* モバイル向けにパディングを縮小 */
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    position: relative;
-    z-index: 1;
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
 }
 
-/* Typography Hierarchy */
 .header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .logo {
     font-family: var(--font-serif);
-    font-size: 3.5rem;
+    font-size: 2.5rem; /* モバイル向けに縮小 */
     font-weight: 900;
     font-style: italic;
-    letter-spacing: -0.02em;
     color: var(--on-surface);
-    margin-bottom: 0.5rem;
 }
 
-.logo span {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 300;
-    letter-spacing: 0.5rem;
-    color: var(--accent-cyan);
-    text-indent: 0.5rem;
-}
-
-.tagline {
-    font-size: 0.9rem;
-    color: var(--on-surface-variant);
-    letter-spacing: 0.2rem;
-}
-
-/* Card-in-Card Implementation */
+/* Card-in-Card Reset */
 .object-card {
     background: var(--surface-container-low);
-    backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px);
     border: 1px solid var(--outline-variant);
-    border-radius: var(--radius-l);
-    padding: 3rem;
-    margin-bottom: 2rem;
-    position: relative;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem; /* モバイル向けに縮小 */
 }
 
-.card-header {
-    margin-bottom: 2rem;
+/* Insight Card Logic */
+.insight-card-link {
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
 }
 
-.label {
-    font-size: 0.7rem;
-    letter-spacing: 0.3rem;
-    color: var(--accent-cyan);
-    opacity: 0.8;
-}
-
-.title {
-    font-family: var(--font-serif);
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-top: 0.5rem;
-}
-
-/* Individual Insight Card (The "In" Card) */
 .insight-item {
     background: var(--surface-container-highest);
     border: 1px solid var(--outline-variant);
-    border-radius: var(--radius-m);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    padding: 1.5rem;
     transition: all var(--duration-medium) var(--easing-emphasized);
-    cursor: pointer;
     position: relative;
-    display: block;
-    text-decoration: none;
 }
 
 .insight-item:hover {
-    transform: translateY(-4px) scale(1.01);
-    border-color: rgba(56, 189, 248, 0.4);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    background: rgba(30, 41, 59, 0.7);
+    transform: translateY(-4px);
+    background: rgba(30, 41, 59, 0.8);
+    border-color: var(--accent-cyan);
 }
 
-.insight-item:active {
-    transform: translateY(-2px) scale(0.99);
-}
-
-.insight-item time {
-    font-size: 0.8rem;
+.m3-label {
+    font-size: 0.75rem;
     color: var(--accent-cyan);
     display: block;
     margin-bottom: 0.5rem;
 }
 
-.insight-item h3 {
+.m3-title {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.4;
+    font-size: 1.25rem;
     color: var(--on-surface);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
-.insight-item h3::after {
-    content: ' →';
+.m3-body {
+    font-size: 0.9rem;
+    color: var(--on-surface-variant);
+    line-height: 1.5;
+}
+
+.m3-indicator {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    color: var(--accent-cyan);
     opacity: 0;
     transform: translateX(-10px);
-    transition: all var(--duration-short) var(--easing-standard);
-    display: inline-block;
-    color: var(--accent-cyan);
+    transition: all 0.3s ease;
 }
 
-.insight-item:hover h3::after {
+.insight-item:hover .m3-indicator {
     opacity: 1;
-    transform: translateX(10px);
+    transform: translateX(0);
 }
 
-.insight-item p {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--on-surface-variant);
+/* PC向け調整 */
+@media (min-width: 768px) {
+    .night-sky { padding: 4rem 2rem; }
+    .logo { font-size: 3.5rem; }
+    .object-card { padding: 3rem; }
+    .insight-item { padding: 2rem; }
+    .m3-title { font-size: 1.5rem; }
 }
 
-/* Back Link & References: M3 Chip/Button style */
-.back-link {
-    margin-top: 3rem;
-}
-
-.back-link a, .references a {
+/* Reference Buttons */
+.references a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 100px;
     color: var(--accent-cyan);
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.6rem 1.2rem;
-    border-radius: 100px;
-    background: rgba(56, 189, 248, 0.1);
-    transition: all var(--duration-short) var(--easing-standard);
-    display: inline-flex;
-    align-items: center;
-}
-
-.back-link a:hover, .references a:hover {
-    background: rgba(56, 189, 248, 0.2);
-    transform: translateX(5px);
-}
-
-.references ul {
-    list-style: none;
-}
-
-.references li {
-    margin-bottom: 1rem;
-}
-
-/* Footer */
-.footer {
-    text-align: center;
-    margin-top: 6rem;
-    padding-bottom: 4rem;
-    font-size: 0.75rem;
-    color: var(--on-surface-variant);
-    opacity: 0.6;
-}
-
-/* Heartbeat Animation */
-.wave-container {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.wave {
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-    background-size: 200% 100%;
-    animation: wave-pulse 3s linear infinite;
-}
-
-@keyframes wave-pulse {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
 }
