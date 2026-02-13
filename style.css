@@ -1,0 +1,159 @@
+:root {
+    --bg-deep: #030a1e; /* より深く、わずかに青みの強い紺色へ */
+    --bg-gradient: radial-gradient(circle at 50% 10%, #0a192f 0%, #030a1e 100%);
+    --accent-cyan: #7dd3fc; /* 少し彩度を落とし、透明感を強調 */
+    --on-surface: #f1f5f9;
+    --on-surface-variant: #94a3b8;
+    --outline-variant: rgba(255, 255, 255, 0.08);
+    --surface-container-low: rgba(10, 25, 47, 0.4);
+    --surface-container-highest: rgba(30, 41, 59, 0.3);
+    
+    --duration-slow: 800ms;
+    --duration-medium: 400ms;
+    --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* 呼吸するモーション (Biological Rhythm) の再定義 */
+@keyframes breathing {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.02); opacity: 1; }
+}
+
+.heartbeat-section .wave {
+    animation: breathing 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    background: var(--accent-cyan);
+    height: 2px;
+    width: 100%;
+    box-shadow: 0 0 20px var(--accent-cyan);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-deep);
+    color: var(--on-surface);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.night-sky {
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    padding: 2rem 1rem; /* モバイル向けにパディングを縮小 */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 2.5rem; /* モバイル向けに縮小 */
+    font-weight: 900;
+    font-style: italic;
+    color: var(--on-surface);
+}
+
+/* Card-in-Card Reset */
+.object-card {
+    background: var(--surface-container-low);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--outline-variant);
+    border-radius: 16px;
+    padding: 1.5rem; /* モバイル向けに縮小 */
+}
+
+/* Insight Card Logic */
+.insight-card-link {
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.insight-item {
+    background: var(--surface-container-highest);
+    border: 1px solid var(--outline-variant);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all var(--duration-medium) var(--easing-emphasized);
+    position: relative;
+}
+
+.insight-item:hover {
+    transform: translateY(-4px);
+    background: rgba(30, 41, 59, 0.8);
+    border-color: var(--accent-cyan);
+}
+
+.m3-label {
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.m3-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--on-surface);
+    margin-bottom: 0.75rem;
+}
+
+.m3-body {
+    font-size: 0.9rem;
+    color: var(--on-surface-variant);
+    line-height: 1.5;
+}
+
+.m3-indicator {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    color: var(--accent-cyan);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.insight-item:hover .m3-indicator {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* PC向け調整 */
+@media (min-width: 768px) {
+    .night-sky { padding: 4rem 2rem; }
+    .logo { font-size: 3.5rem; }
+    .object-card { padding: 3rem; }
+    .insight-item { padding: 2rem; }
+    .m3-title { font-size: 1.5rem; }
+}
+
+/* Reference Buttons */
+.references a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 100px;
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
