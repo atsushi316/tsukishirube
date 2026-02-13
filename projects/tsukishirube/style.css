@@ -1,39 +1,45 @@
 :root {
-    --bg-deep: #020617; /* より深い闇へ */
+    --bg-deep: #020617;
     --bg-gradient: radial-gradient(circle at 20% 30%, #0f172a 0%, #020617 100%);
-    --accent-cyan: #22d3ee; /* 彩度を微調整し、誘目性を高める */
+    --accent-cyan: #38bdf8; /* 信頼感のある空色へ微調整 */
     --text-main: #f8fafc;
-    --text-dim: #94a3b8;
-    --glass-bg: rgba(15, 23, 42, 0.4); /* 深みのある透過 */
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-dim: #64748b; /* コントラストを下げ、静寂を演出 */
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.05);
     --font-serif: 'Shippori Mincho', serif;
     --font-sans: 'Montserrat', 'Noto Sans JP', sans-serif;
-    --frosted-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); /* 拡散シャドウによる奥行き */
 }
 
-/* 2026 Trend: Frosted Touch Logic */
+body {
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 1.618 Golden Ratio Typography */
+h1 { font-size: 3.2rem; }
+h2 { font-size: 2.1rem; }
+h3 { font-size: 1.6rem; line-height: 1.618; }
+p { font-size: 1rem; line-height: 1.8; letter-spacing: 0.05em; }
+
 .object-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    border-radius: 2px; /* 鋭角に近い微小な丸み：厳格さと洗練 */
-    padding: 2.5rem;
-    box-shadow: var(--frosted-glow);
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    padding: 3rem; /* 余白の拡大 */
+    margin-bottom: 2rem;
 }
 
-.object-card:hover {
-    border-color: rgba(34, 211, 238, 0.4);
-    box-shadow: 0 12px 48px 0 rgba(0, 242, 255, 0.1);
-    transform: scale(1.005);
+.insight-item h3 a {
+    font-weight: 700;
+    letter-spacing: 0.05em;
 }
 
-/* Dynamic Shadow Depth */
-.insight-item.highlight {
-    border-left: 1px solid var(--accent-cyan); /* 線を細くし、繊細さを強調 */
-    padding-left: 1.5rem;
-    background: linear-gradient(90deg, rgba(34, 211, 238, 0.03) 0%, transparent 100%);
+.insight-item p {
+    margin-top: 1rem;
+    color: var(--text-dim);
+}
+
+.references ul li {
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding: 0.5rem 0;
 }
 
 .insight-item time {
