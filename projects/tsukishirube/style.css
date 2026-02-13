@@ -43,11 +43,29 @@
     margin-bottom: 0.5rem;
 }
 
-.insight-item h3 {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    line-height: 1.4;
+.insight-item h3 a {
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.insight-item h3 a:hover {
+    color: var(--accent-cyan);
+}
+
+.back-link {
+    margin-top: 3rem;
+}
+
+.back-link a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.back-link a:hover {
+    opacity: 1;
 }
 
 .insight-item p {
