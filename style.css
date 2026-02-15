@@ -4,9 +4,9 @@
     --accent-cyan: #7dd3fc; /* 少し彩度を落とし、透明感を強調 */
     --on-surface: #f1f5f9;
     --on-surface-variant: #94a3b8;
-    --outline-variant: rgba(255, 255, 255, 0.05); /* より繊細な境界へ (0.08 -> 0.05) */
-    --surface-container-low: rgba(10, 25, 47, 0.2); /* 背景の透明度を上げ、奥行きを強調 (0.4 -> 0.2) */
-    --surface-container-highest: rgba(30, 41, 59, 0.2); /* グリッド要素の統一感 (0.3 -> 0.2) */
+    --outline-variant: rgba(255, 255, 255, 0.03); /* さらに極微細な境界へ (0.05 -> 0.03) */
+    --surface-container-low: rgba(10, 25, 47, 0.15); /* 透明度をさらに上げ、空気感を強化 (0.2 -> 0.15) */
+    --surface-container-highest: rgba(30, 41, 59, 0.15); /* グリッド要素の統一感 (0.2 -> 0.15) */
     
     --duration-slow: 800ms;
     --duration-medium: 400ms;
