@@ -2,7 +2,7 @@ import json
 import os
 
 def generate():
-    workspace = "/Users/atsushi/.openclaw/workspace/projects/tsukishirube"
+    workspace = "public_site"
     articles_dir = f"{workspace}/articles"
     os.makedirs(articles_dir, exist_ok=True)
 
