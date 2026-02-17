@@ -1,14 +1,17 @@
 :root {
-    --bg-deep: #030a1e; /* より深く、わずかに青みの強い紺色へ */
+    --bg-deep: #030a1e;
     --bg-gradient: radial-gradient(circle at 50% 10%, #0a192f 0%, #030a1e 100%);
-    --accent-cyan: #7dd3fc; /* 少し彩度を落とし、透明感を強調 */
     --on-surface: #f1f5f9;
     --on-surface-variant: #94a3b8;
-    --outline-variant: rgba(255, 255, 255, 0.03); /* さらに極微細な境界へ (0.05 -> 0.03) */
-    --surface-container-low: rgba(10, 25, 47, 0.15); /* 透明度をさらに上げ、空気感を強化 (0.2 -> 0.15) */
-    --surface-container-highest: rgba(30, 41, 59, 0.15); /* グリッド要素の統一感 (0.2 -> 0.15) */
     
-    --duration-slow: 800ms;
+    /* M3 Elevated System for Dark Theme */
+    --accent-cyan: #7dd3fc;
+    --surface-0: #030a1e;
+    --surface-1: #0a1733; /* 5% mix */
+    --surface-2: #0e1d3d; /* 8% mix */
+    --surface-3: #122247; /* 11% mix */
+    --outline-variant: rgba(255, 255, 255, 0.05);
+    
     --duration-medium: 400ms;
     --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
@@ -16,7 +19,6 @@
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* 呼吸するモーション (Biological Rhythm) の再定義 */
 @keyframes breathing {
     0%, 100% { transform: scale(1); opacity: 0.8; }
     50% { transform: scale(1.02); opacity: 1; }
@@ -48,7 +50,7 @@ body {
 .night-sky {
     min-height: 100vh;
     background: var(--bg-gradient);
-    padding: 2rem 1rem; /* モバイル向けにパディングを縮小 */
+    padding: 2rem 1rem;
 }
 
 .container {
@@ -65,22 +67,20 @@ body {
 
 .logo {
     font-family: var(--font-serif);
-    font-size: 2.5rem; /* モバイル向けに縮小 */
+    font-size: 2.5rem;
     font-weight: 900;
     font-style: italic;
     color: var(--on-surface);
 }
 
-/* Card-in-Card Reset */
 .object-card {
-    background: var(--surface-container-low);
+    background: var(--surface-1);
     backdrop-filter: blur(20px);
     border: 1px solid var(--outline-variant);
-    border-radius: 16px;
-    padding: 1.5rem; /* モバイル向けに縮小 */
+    border-radius: 28px;
+    padding: 1.5rem;
 }
 
-/* Insight Card Logic */
 .insight-card-link {
     text-decoration: none;
     display: block;
@@ -88,9 +88,9 @@ body {
 }
 
 .insight-item {
-    background: var(--surface-container-highest);
+    background: var(--surface-1);
     border: 1px solid var(--outline-variant);
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 1.5rem;
     transition: all var(--duration-medium) var(--easing-emphasized);
     position: relative;
@@ -98,8 +98,13 @@ body {
 
 .insight-item:hover {
     transform: translateY(-4px);
-    background: rgba(30, 41, 59, 0.8);
+    background: var(--surface-2);
     border-color: var(--accent-cyan);
+}
+
+.insight-item.highlight {
+    background: var(--surface-3);
+    border-color: rgba(125, 211, 252, 0.3);
 }
 
 .m3-label {
@@ -107,6 +112,8 @@ body {
     color: var(--accent-cyan);
     display: block;
     margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
 .m3-title {
@@ -114,12 +121,13 @@ body {
     font-size: 1.25rem;
     color: var(--on-surface);
     margin-bottom: 0.75rem;
+    line-height: 1.4;
 }
 
 .m3-body {
     font-size: 0.9rem;
     color: var(--on-surface-variant);
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .m3-indicator {
@@ -137,23 +145,10 @@ body {
     transform: translateX(0);
 }
 
-/* PC向け調整 */
 @media (min-width: 768px) {
     .night-sky { padding: 4rem 2rem; }
     .logo { font-size: 3.5rem; }
     .object-card { padding: 3rem; }
     .insight-item { padding: 2rem; }
     .m3-title { font-size: 1.5rem; }
-}
-
-/* Reference Buttons */
-.references a {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: rgba(56, 189, 248, 0.1);
-    border-radius: 100px;
-    color: var(--accent-cyan);
-    text-decoration: none;
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
 }
