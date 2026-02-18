@@ -1,13 +1,28 @@
 import json
 import os
+import sys
 
-def generate():
+def generate(new_title=None, new_content=None):
     workspace = "public_site"
     articles_dir = f"{workspace}/articles"
     os.makedirs(articles_dir, exist_ok=True)
 
-    with open(f"{workspace}/contents.json", "r") as f:
+    contents_path = f"{workspace}/contents.json"
+    with open(contents_path, "r") as f:
         contents = json.load(f)
+
+    # もし新しい記事の情報があれば追加
+    if new_title and new_content:
+        from datetime import datetime
+        new_entry = {
+            "date": datetime.now().strftime("%Y.%m.%d"),
+            "title": new_title,
+            "content": new_content,
+            "highlight": True
+        }
+        contents.insert(0, new_entry) # 先頭に追加
+        with open(contents_path, "w") as f:
+            json.dump(contents, f, ensure_ascii=False, indent=4)
 
     with open(f"{workspace}/template.html", "r") as f:
         main_template = f.read()
@@ -56,4 +71,7 @@ def generate():
     print("Successfully generated clean HTML structure.")
 
 if __name__ == "__main__":
-    generate()
+    if len(sys.argv) > 2:
+        generate(sys.argv[1], sys.argv[2])
+    else:
+        generate()
