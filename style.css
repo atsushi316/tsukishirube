@@ -149,10 +149,59 @@ body {
     transform: translateX(0);
 }
 
+/* Article Navigation */
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-spacer {
+    flex: 1;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.back-link a {
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
 @media (min-width: 768px) {
     .night-sky { padding: 4rem 2rem; }
     .logo { font-size: 3.5rem; }
     .object-card { padding: 3rem; }
     .insight-item { padding: 2rem; }
     .m3-title { font-size: 1.5rem; }
+}
+
+@media (max-width: 600px) {
+    .article-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .nav-btn {
+        text-align: center;
+        width: 100%;
+    }
 }

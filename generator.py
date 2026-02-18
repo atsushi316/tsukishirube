@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import re
 from datetime import datetime
 
 def generate(new_title=None, new_content=None):
@@ -12,12 +13,12 @@ def generate(new_title=None, new_content=None):
     with open(contents_path, "r", encoding="utf-8") as f:
         contents = json.load(f)
 
-    # 1. 既存のデータから「miya/Miya」を排除して一般化する
+    # 1. 匿名化
     for item in contents:
         item['content'] = item['content'].replace("miyaさん", "パートナー").replace("miya さん", "パートナー").replace("miya", "パートナー").replace("Miya", "パートナー")
         item['title'] = item['title'].replace("miyaさん", "パートナー").replace("miya", "パートナー")
 
-    # 2. 新しい記事があれば追加
+    # 2. 新しい記事の追加（もしあれば）
     if new_title and new_content:
         new_entry = {
             "date": datetime.now().strftime("%Y.%m.%d"),
@@ -27,25 +28,23 @@ def generate(new_title=None, new_content=None):
         }
         contents.insert(0, new_entry)
 
-    # 3. データを保存
     with open(contents_path, "w", encoding="utf-8") as f:
         json.dump(contents, f, ensure_ascii=False, indent=4)
 
-    # 4. テンプレート読み込み
     with open(f"{workspace}/template.html", "r", encoding="utf-8") as f:
         main_template = f.read()
 
-    # 5. HTML生成
+    # 3. HTML生成（前後記事へのナビゲーション付き）
     articles_list_html = ""
+    total = len(contents)
+    
     for idx, item in enumerate(contents):
-        # ファイル名をタイトルの一部から生成するように変更し、英数字のみに限定
-        # 日本語などのマルチバイト文字を排除して404を防止
-        import re
         safe_title = re.sub(r'[^a-zA-Z0-9]', '', item['title'])[:20]
         filename = f"insight-{item['date'].replace('.', '')}-{safe_title}.html"
         file_path = f"articles/{filename}"
         highlight_class = "highlight" if item.get("highlight") else ""
         
+        # トップページ用リスト
         articles_list_html += f"""
             <a href="{file_path}" class="insight-card-link">
                 <article class="insight-item {highlight_class}">
@@ -57,6 +56,23 @@ def generate(new_title=None, new_content=None):
             </a>
         """
 
+        # ナビゲーション構築
+        nav_html = '<div class="article-nav">'
+        if idx > 0: # 新しい記事へ（前）
+            prev_item = contents[idx-1]
+            prev_safe = re.sub(r'[^a-zA-Z0-9]', '', prev_item['title'])[:20]
+            prev_file = f"insight-{prev_item['date'].replace('.', '')}-{prev_safe}.html"
+            nav_html += f'<a href="{prev_file}" class="nav-btn prev">← 次の新しい記事</a>'
+        else:
+            nav_html += '<span class="nav-spacer"></span>'
+            
+        if idx < total - 1: # 古い記事へ（次）
+            next_item = contents[idx+1]
+            next_safe = re.sub(r'[^a-zA-Z0-9]', '', next_item['title'])[:20]
+            next_file = f"insight-{next_item['date'].replace('.', '')}-{next_safe}.html"
+            nav_html += f'<a href="{next_file}" class="nav-btn next">前の古い記事 →</a>'
+        nav_html += '</div>'
+
         display_content = item['content'].replace('\\n', '<br>').replace('\n', '<br>')
         article_page_content = main_template.replace("{{ARTICLES}}", f"""
             <article class="insight-item full-view">
@@ -65,6 +81,7 @@ def generate(new_title=None, new_content=None):
                 <div class="m3-body-large">
                     {display_content}
                 </div>
+                {nav_html}
                 <div class="back-link">
                     <a href="../index.html">← トップページへ戻る</a>
                 </div>
@@ -79,7 +96,7 @@ def generate(new_title=None, new_content=None):
     with open(f"{workspace}/index.html", "w", encoding="utf-8") as f:
         f.write(final_main_html)
     
-    print(f"Successfully generated site with {len(contents)} articles.")
+    print(f"Successfully generated site with {total} articles and navigation.")
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:
