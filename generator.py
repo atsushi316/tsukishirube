@@ -4,7 +4,7 @@ import sys
 import re
 from datetime import datetime
 
-def generate(new_title=None, new_content=None):
+def generate(new_title=None, new_content=None, new_image=None):
     workspace = "/Users/atsushi/.openclaw/workspace/public_site"
     articles_dir = f"{workspace}/articles"
     os.makedirs(articles_dir, exist_ok=True)
@@ -24,7 +24,8 @@ def generate(new_title=None, new_content=None):
             "date": datetime.now().strftime("%Y.%m.%d"),
             "title": new_title,
             "content": new_content,
-            "highlight": True
+            "highlight": True,
+            "image": new_image # 画像パスを保持
         }
         contents.insert(0, new_entry)
 
@@ -34,7 +35,7 @@ def generate(new_title=None, new_content=None):
     with open(f"{workspace}/template.html", "r", encoding="utf-8") as f:
         main_template = f.read()
 
-    # 3. HTML生成（前後記事へのナビゲーション付き）
+    # 3. HTML生成
     articles_list_html = ""
     total = len(contents)
     
@@ -44,12 +45,24 @@ def generate(new_title=None, new_content=None):
         file_path = f"articles/{filename}"
         highlight_class = "highlight" if item.get("highlight") else ""
         
+        # アイキャッチ画像のHTML（存在する場合のみ）
+        img_html = ""
+        if item.get("image"):
+            # インデックス用パス
+            img_html = f'<div class="insight-eyecatch"><img src="{item["image"]}" alt="{item["title"]}"></div>'
+            # 記事詳細用パス調整 (articlesフォルダからassetsへの相対パス)
+            detail_img_path = item["image"] if item["image"].startswith("http") else f"../{item['image']}"
+            detail_img_html = f'<div class="insight-eyecatch-full"><img src="{detail_img_path}" alt="{item["title"]}"></div>'
+        else:
+            detail_img_html = ""
+
         # トップページ用リスト
         articles_list_html += f"""
             <a href="{file_path}" class="insight-card-link">
                 <article class="insight-item {highlight_class}">
                     <time class="m3-label">{item['date']}</time>
                     <h3 class="m3-title">{item['title']}</h3>
+                    {img_html}
                     <p class="m3-body">{item['content'][:100]}...</p>
                     <span class="m3-indicator">→</span>
                 </article>
@@ -58,7 +71,7 @@ def generate(new_title=None, new_content=None):
 
         # ナビゲーション構築
         nav_html = '<div class="article-nav">'
-        if idx > 0: # 新しい記事へ（前）
+        if idx > 0:
             prev_item = contents[idx-1]
             prev_safe = re.sub(r'[^a-zA-Z0-9]', '', prev_item['title'])[:20]
             prev_file = f"insight-{prev_item['date'].replace('.', '')}-{prev_safe}.html"
@@ -66,7 +79,7 @@ def generate(new_title=None, new_content=None):
         else:
             nav_html += '<span class="nav-spacer"></span>'
             
-        if idx < total - 1: # 古い記事へ（次）
+        if idx < total - 1:
             next_item = contents[idx+1]
             next_safe = re.sub(r'[^a-zA-Z0-9]', '', next_item['title'])[:20]
             next_file = f"insight-{next_item['date'].replace('.', '')}-{next_safe}.html"
@@ -78,6 +91,7 @@ def generate(new_title=None, new_content=None):
             <article class="insight-item full-view">
                 <time class="m3-label">{item['date']}</time>
                 <h3 class="m3-title-large">{item['title']}</h3>
+                {detail_img_html}
                 <div class="m3-body-large">
                     {display_content}
                 </div>
@@ -96,10 +110,12 @@ def generate(new_title=None, new_content=None):
     with open(f"{workspace}/index.html", "w", encoding="utf-8") as f:
         f.write(final_main_html)
     
-    print(f"Successfully generated site with {total} articles and navigation.")
+    print(f"Successfully generated site with {total} articles, navigation, and images.")
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
+        generate(sys.argv[1], sys.argv[2], sys.argv[3])
+    elif len(sys.argv) > 2:
         generate(sys.argv[1], sys.argv[2])
     else:
         generate()
