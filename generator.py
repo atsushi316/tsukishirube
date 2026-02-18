@@ -38,8 +38,10 @@ def generate(new_title=None, new_content=None):
     # 5. HTML生成
     articles_list_html = ""
     for idx, item in enumerate(contents):
-        # ファイル名をタイトルの一部から生成するように変更し、インデックス依存を排除
-        safe_title = "".join(x for x in item['title'] if x.isalnum())[:20]
+        # ファイル名をタイトルの一部から生成するように変更し、英数字のみに限定
+        # 日本語などのマルチバイト文字を排除して404を防止
+        import re
+        safe_title = re.sub(r'[^a-zA-Z0-9]', '', item['title'])[:20]
         filename = f"insight-{item['date'].replace('.', '')}-{safe_title}.html"
         file_path = f"articles/{filename}"
         highlight_class = "highlight" if item.get("highlight") else ""
