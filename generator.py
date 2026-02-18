@@ -52,7 +52,7 @@ def generate(new_title=None, new_content=None):
                 <time class="m3-label">{item['date']}</time>
                 <h3 class="m3-title-large">{item['title']}</h3>
                 <div class="m3-body-large">
-                    <p>{item['content']}</p>
+                    {item['content'].replace('\n', '<br>')}
                 </div>
                 <div class="back-link">
                     <a href="../index.html">← トップページへ戻る</a>
