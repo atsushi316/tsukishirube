@@ -6,11 +6,14 @@
     
     /* M3 Elevated System for Dark Theme */
     --accent-cyan: #7dd3fc;
+    --accent-glow: rgba(125, 211, 252, 0.15);
     --surface-0: #030a1e;
     --surface-1: #0a1733; /* 5% mix */
     --surface-2: #0e1d3d; /* 8% mix */
     --surface-3: #122247; /* 11% mix */
+    --surface-accent: #162a52; /* 14% mix + sentiment */
     --outline-variant: rgba(255, 255, 255, 0.05);
+    --outline-glow: rgba(125, 211, 252, 0.2);
     
     --duration-medium: 400ms;
     --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
@@ -97,9 +100,10 @@ body {
 }
 
 .insight-item:hover {
-    transform: translateY(-4px);
-    background: var(--surface-2);
+    transform: translateY(-6px) scale(1.01);
+    background: var(--surface-accent);
     border-color: var(--accent-cyan);
+    box-shadow: 0 12px 30px -10px var(--accent-glow);
 }
 
 .insight-item.highlight {
