@@ -1,38 +1,29 @@
 :root {
-    --bg-deep: #030a1e;
-    --bg-gradient: radial-gradient(circle at 50% 10%, #0a192f 0%, #030a1e 100%);
+    --primary-indigo: #6366f1;
+    --accent-cyan: #7dd3fc;
+    --accent-glow: rgba(99, 102, 241, 0.2);
+    --surface-0: #020617;
+    --surface-1: #0f172a;
+    --surface-2: #1e293b;
     --on-surface: #f1f5f9;
     --on-surface-variant: #94a3b8;
-    
-    /* M3 Elevated System for Dark Theme */
-    --accent-cyan: #7dd3fc;
-    --accent-glow: rgba(125, 211, 252, 0.15);
-    --surface-0: #030a1e;
-    --surface-1: #0a1733;
-    --surface-2: #0e1d3d;
-    --surface-3: #122247;
-    --surface-accent: #162a52;
     --outline-variant: rgba(255, 255, 255, 0.05);
     
-    --duration-medium: 400ms;
-    --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
-
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     
-    /* Bento Grid Variables */
     --card-radius: 24px;
-    --grid-gap: 16px;
-}
-
-@keyframes breathing {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.02); opacity: 1; }
+    --grid-gap: 1.25rem;
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes breathing {
+    0%, 100% { opacity: 0.3; transform: scaleX(0.95); }
+    50% { opacity: 1; transform: scaleX(1); }
 }
 
 * {
@@ -42,97 +33,94 @@
 }
 
 body {
-    background: var(--bg-deep);
+    background-color: var(--surface-0);
     color: var(--on-surface);
     font-family: var(--font-sans);
     line-height: 1.6;
-    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
 .night-sky {
     min-height: 100vh;
-    background: var(--bg-gradient);
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
+    background: radial-gradient(circle at top right, #1e1b4b 0%, #020617 60%);
 }
 
-/* Bento Grid Layout */
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+    grid-auto-rows: minmax(120px, auto);
     gap: var(--grid-gap);
 }
 
 .header {
     grid-column: span 4;
-    text-align: left;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    animation: slideIn 0.8s var(--easing-emphasized);
+    padding: 2rem 0;
+    animation: slideIn 1s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 .logo {
     font-family: var(--font-serif);
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 900;
     font-style: italic;
-    color: var(--on-surface);
+    letter-spacing: -0.02em;
 }
 
 .logo span {
     font-size: 1rem;
     font-style: normal;
     font-family: var(--font-sans);
-    opacity: 0.5;
-    margin-left: 1rem;
+    opacity: 0.4;
+    margin-left: 1.5rem;
+    letter-spacing: 0.2em;
 }
 
 .tagline {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: var(--on-surface-variant);
     margin-top: 0.5rem;
+    font-weight: 500;
 }
 
-/* Card Base */
+/* Bento Card Styles */
 .object-card {
     background: var(--surface-1);
-    backdrop-filter: blur(20px);
     border: 1px solid var(--outline-variant);
     border-radius: var(--card-radius);
-    padding: 1.5rem;
-    transition: all var(--duration-medium) var(--easing-emphasized);
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    animation: slideIn 0.8s var(--easing-emphasized) both;
+    transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+    animation: slideIn 1s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 .object-card:hover {
     background: var(--surface-2);
-    border-color: rgba(125, 211, 252, 0.3);
-    box-shadow: 0 10px 30px -10px var(--accent-glow);
+    border-color: var(--primary-indigo);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -20px var(--accent-glow);
 }
 
 .card-header .label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--accent-cyan);
-    opacity: 0.8;
-    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--primary-indigo);
+    letter-spacing: 0.2em;
     margin-bottom: 0.5rem;
     display: block;
 }
 
 .card-header .title {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
 }
 
-/* Specific Bento Placements */
+/* Specific Bento Sizes */
 .identity {
     grid-column: span 2;
     grid-row: span 2;
@@ -143,66 +131,99 @@ body {
     grid-row: span 1;
 }
 
-.heartbeat-section .wave-container {
-    height: 40px;
-    display: flex;
-    align-items: center;
+.strategy {
+    grid-column: span 2;
+    grid-row: span 1;
+    background: linear-gradient(135deg, var(--surface-1) 0%, #1e1b4b 100%);
 }
 
-.heartbeat-section .wave {
-    animation: breathing 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-    background: var(--accent-cyan);
-    height: 2px;
-    width: 100%;
-    box-shadow: 0 0 20px var(--accent-cyan);
+.strategy-msg {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--accent-cyan);
 }
 
 .insights {
     grid-column: span 4;
 }
 
-.insights .card-body {
+.grid-insights {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .references {
-    grid-column: span 2;
+    grid-column: span 4;
 }
 
-/* Insight Item Styles */
+/* Inner elements */
+.pubkey {
+    font-family: monospace;
+    opacity: 0.4;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.status-msg {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.wave-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.wave {
+    height: 2px;
+    width: 100%;
+    background: var(--primary-indigo);
+    box-shadow: 0 0 15px var(--primary-indigo);
+    animation: breathing 3s ease-in-out infinite;
+}
+
+/* Insight Items */
 .insight-card-link {
     text-decoration: none;
     color: inherit;
 }
 
 .insight-item {
-    background: var(--surface-2);
+    background: var(--surface-0);
     border: 1px solid var(--outline-variant);
     border-radius: 16px;
-    padding: 1.25rem;
+    padding: 1.5rem;
     height: 100%;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    transition: border-color 0.3s ease;
 }
 
 .insight-item:hover {
-    background: var(--surface-accent);
-    transform: scale(1.02);
+    border-color: var(--primary-indigo);
+}
+
+.insight-item.highlight {
+    background: rgba(99, 102, 241, 0.05);
+}
+
+.m3-label {
+    font-size: 0.7rem;
+    color: var(--on-surface-variant);
+    font-weight: 700;
 }
 
 .m3-title {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.25rem;
+    margin: 0.75rem 0;
     line-height: 1.3;
-    margin: 0.5rem 0;
 }
 
 .m3-body {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--on-surface-variant);
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -210,21 +231,48 @@ body {
     overflow: hidden;
 }
 
-/* Footer */
+.ref-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.ref-list a {
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.ref-list a:hover {
+    color: var(--accent-cyan);
+}
+
 .footer {
     grid-column: span 4;
     text-align: center;
-    padding: 2rem;
-    color: var(--on-surface-variant);
+    padding: 4rem 0 2rem;
     font-size: 0.8rem;
+    opacity: 0.4;
+    letter-spacing: 0.05em;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .header, .insights, .references, .footer {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
     .container {
         grid-template-columns: 1fr;
     }
-    .header, .identity, .heartbeat-section, .insights, .references, .footer {
+    .header, .identity, .heartbeat-section, .strategy, .insights, .references, .footer {
         grid-column: span 1;
     }
+    .logo { font-size: 2.5rem; }
 }
