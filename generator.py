@@ -25,7 +25,7 @@ def generate(new_title=None, new_content=None, new_image=None):
             "title": new_title,
             "content": new_content,
             "highlight": True,
-            "image": new_image # 画像パスを保持
+            "image": new_image # 画像パスを確実に保持
         }
         contents.insert(0, new_entry)
 
